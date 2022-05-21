@@ -6,6 +6,17 @@ const { FIXED10, PERCENT10 } = require('../utils/couponRules');
 
 exports.createCoupon = wrapAsync(async (req, res, next) => {
   const { couponCode } = req.body;
+  if (
+    couponCode !== 'FIXED10' ||
+    couponCode !== 'PERCENT10' ||
+    couponCode !== 'MIXED10' ||
+    couponCode !== 'REJECTED10'
+  ) {
+    throw new ErrorMsg(
+      'This coupon code is not valid,Please, provide a valid coupon code',
+      400
+    );
+  }
   const cartItems = await Cart.findAll();
 
   if (cartItems.length === 0) {
