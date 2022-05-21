@@ -73,7 +73,43 @@ const PERCENT10 = (cartItems, couponCode, res) => {
   );
 };
 
+const MIXED10 = (cartItems, couponCode, res) => {
+  const totalPrice = cartItems.reduce((acc, curVal) => {
+    return acc + curVal.price;
+  }, 0);
+
+  if (cartItems.length < 3 || !(totalPrice > 200)) {
+    throw new ErrorMsg(
+      'Cart must have at least 3 items and Cart total must be greater than $200'
+    );
+  }
+
+  const compareDiscount = (discount_fixed10, discount_percent) => {
+    if (discount_fixed10 > discount_percent) {
+      return discount_fixed10;
+    } else {
+      return discount_percent;
+    }
+  };
+
+  const discount_percent = Math.floor(totalPrice * (10 / 100));
+  const discount_fixed10 = 10;
+  const discountAmount = compareDiscount(discount_fixed10, discount_percent);
+  const applied = true;
+  const adjustedPrice = totalPrice - discountAmount;
+
+  processCoupon(
+    couponCode,
+    res,
+    adjustedPrice,
+    discountAmount,
+    applied,
+    cartItems
+  );
+};
+
 module.exports = {
   FIXED10,
   PERCENT10,
+  MIXED10,
 };

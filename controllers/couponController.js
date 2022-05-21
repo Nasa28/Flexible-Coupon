@@ -2,16 +2,13 @@ const Cart = require('../models/Cart');
 const wrapAsync = require('../utils/wrapAsync');
 const Coupon = require('../models/Coupon');
 const ErrorMsg = require('../utils/ErrorMsg');
-const { FIXED10, PERCENT10 } = require('../utils/couponRules');
+const { FIXED10, PERCENT10, MIXED10 } = require('../utils/couponRules');
 
 exports.createCoupon = wrapAsync(async (req, res, next) => {
   const { couponCode } = req.body;
-  if (
-    couponCode !== 'FIXED10' ||
-    couponCode !== 'PERCENT10' ||
-    couponCode !== 'MIXED10' ||
-    couponCode !== 'REJECTED10'
-  ) {
+  const valid_coupon_codes = ['FIXED10', 'PERCENT10', 'MIXED10', 'REJECTED10'];
+
+  if (!valid_coupon_codes.includes(couponCode)) {
     throw new ErrorMsg(
       'This coupon code is not valid,Please, provide a valid coupon code',
       400
@@ -29,6 +26,10 @@ exports.createCoupon = wrapAsync(async (req, res, next) => {
 
   if (couponCode === 'PERCENT10') {
     PERCENT10(cartItems, couponCode, res);
+  }
+
+  if (couponCode === 'MIXED10') {
+    MIXED10(cartItems, couponCode, res);
   }
 });
 
