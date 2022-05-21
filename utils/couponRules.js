@@ -108,8 +108,34 @@ const MIXED10 = (cartItems, couponCode, res) => {
   );
 };
 
+const REJECTED10 = (cartItems, couponCode, res) => {
+  const totalPrice = cartItems.reduce((acc, curVal) => {
+    return acc + curVal.price;
+  }, 0);
+
+  if (!(totalPrice > 1100)) {
+    throw new ErrorMsg(' Cart total must be greater than $1000');
+  }
+
+  const discount_percent = Math.floor(totalPrice * (10 / 100));
+  const discount_fixed10 = 10;
+  const discountAmount = discount_percent + discount_fixed10;
+  const applied = true;
+  const adjustedPrice = totalPrice - discountAmount;
+
+  processCoupon(
+    couponCode,
+    res,
+    adjustedPrice,
+    discountAmount,
+    applied,
+    cartItems
+  );
+};
+
 module.exports = {
   FIXED10,
   PERCENT10,
   MIXED10,
+  REJECTED10,
 };

@@ -2,7 +2,12 @@ const Cart = require('../models/Cart');
 const wrapAsync = require('../utils/wrapAsync');
 const Coupon = require('../models/Coupon');
 const ErrorMsg = require('../utils/ErrorMsg');
-const { FIXED10, PERCENT10, MIXED10 } = require('../utils/couponRules');
+const {
+  FIXED10,
+  PERCENT10,
+  MIXED10,
+  REJECTED10,
+} = require('../utils/couponRules');
 
 exports.createCoupon = wrapAsync(async (req, res, next) => {
   const { couponCode } = req.body;
@@ -30,6 +35,10 @@ exports.createCoupon = wrapAsync(async (req, res, next) => {
 
   if (couponCode === 'MIXED10') {
     MIXED10(cartItems, couponCode, res);
+  }
+
+  if (couponCode === 'REJECTED10') {
+    REJECTED10(cartItems, couponCode, res);
   }
 });
 
