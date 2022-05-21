@@ -36,7 +36,7 @@ const FIXED10 = (cartItems, couponCode, res) => {
   }
   const discountAmount = 10;
   const applied = true;
-  const adjustedPrice = totalPrice - 10;
+  const adjustedPrice = totalPrice - discountAmount;
 
   processCoupon(
     couponCode,
@@ -48,8 +48,32 @@ const FIXED10 = (cartItems, couponCode, res) => {
   );
 };
 
+const PERCENT10 = (cartItems, couponCode, res) => {
+  const totalPrice = cartItems.reduce((acc, curVal) => {
+    return acc + curVal.price;
+  }, 0);
 
+  if (cartItems.length < 2 || !(totalPrice > 100)) {
+    throw new ErrorMsg(
+      'Cart must have at least 2 items and Cart total must be greater than $100'
+    );
+  }
+
+  const discountAmount = Math.floor(totalPrice * (10 / 100));
+  const applied = true;
+  const adjustedPrice = totalPrice - discountAmount;
+
+  processCoupon(
+    couponCode,
+    res,
+    adjustedPrice,
+    discountAmount,
+    applied,
+    cartItems
+  );
+};
 
 module.exports = {
   FIXED10,
+  PERCENT10,
 };

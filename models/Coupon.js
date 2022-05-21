@@ -16,7 +16,7 @@ const Coupon = sequelize.define('coupon', {
     allowNull: false,
   },
   discountAmount: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.DOUBLE,
   },
   applied: {
     type: DataTypes.BOOLEAN,
