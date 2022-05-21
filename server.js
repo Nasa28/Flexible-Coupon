@@ -13,7 +13,7 @@ process.on('uncaughtException', (err) => {
 const port = process.env.PORT || 3000;
 
 sequelize
-  .sync({ force: true})
+  .sync({ force: true })
   .then(() => {
     app.listen(port, () => {
       console.log(`server running on port ${port}`);

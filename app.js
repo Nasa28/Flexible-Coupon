@@ -6,6 +6,8 @@ const ErrorMsg = require('./utils/ErrorMsg.js');
 const errorHandler = require('./controllers/errorController');
 const cartRoutes = require('./routes/cartRoutes');
 
+const couponRoute = require('./routes/couponRoutes ');
+
 const app = express();
 app.use(cors('*'));
 
@@ -14,7 +16,9 @@ if (process.env.NODE_ENV === 'development') {
 }
 app.use(express.json());
 
-app.use('/api/v1/carts', cartRoutes);
+app.use('/api/v1/cart', cartRoutes);
+
+app.use('/api/v1/coupon', couponRoute);
 
 app.all('*', (req, res, next) => {
   next(new ErrorMsg(`Can't find this ${req.originalUrl} on this server`, 400));
