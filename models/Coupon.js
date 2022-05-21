@@ -16,10 +16,6 @@ const Coupon = sequelize.define('coupon', {
   discountAmount: {
     type: DataTypes.DOUBLE,
   },
-  applied: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  },
 });
 
 module.exports = Coupon;

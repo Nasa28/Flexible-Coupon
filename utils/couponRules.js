@@ -6,14 +6,12 @@ const processCoupon = async (
   res,
   adjustedPrice,
   discountAmount,
-  applied,
   cartItems
 ) => {
   await Coupon.create({
     couponCode,
     adjustedPrice,
     discountAmount,
-    applied,
   });
 
   return res.status(200).json({
@@ -21,7 +19,6 @@ const processCoupon = async (
     couponCode,
     adjustedPrice,
     discountAmount,
-    applied,
     cartItems,
   });
 };
@@ -31,11 +28,10 @@ const FIXED10 = (cartItems, couponCode, res) => {
     return acc + curVal.price;
   }, 0);
 
-  if (totalPrice <= 50) {
+  if (!totalPrice > 50) {
     throw new ErrorMsg('Cart total price must be greater than $50');
   }
   const discountAmount = 10;
-  const applied = true;
   const adjustedPrice = totalPrice - discountAmount;
 
   processCoupon(
@@ -43,7 +39,6 @@ const FIXED10 = (cartItems, couponCode, res) => {
     res,
     adjustedPrice,
     discountAmount,
-    applied,
     cartItems
   );
 };
@@ -60,7 +55,6 @@ const PERCENT10 = (cartItems, couponCode, res) => {
   }
 
   const discountAmount = Math.floor(totalPrice * (10 / 100));
-  const applied = true;
   const adjustedPrice = totalPrice - discountAmount;
 
   processCoupon(
@@ -68,7 +62,6 @@ const PERCENT10 = (cartItems, couponCode, res) => {
     res,
     adjustedPrice,
     discountAmount,
-    applied,
     cartItems
   );
 };
@@ -95,7 +88,6 @@ const MIXED10 = (cartItems, couponCode, res) => {
   const discount_percent = Math.floor(totalPrice * (10 / 100));
   const discount_fixed10 = 10;
   const discountAmount = compareDiscount(discount_fixed10, discount_percent);
-  const applied = true;
   const adjustedPrice = totalPrice - discountAmount;
 
   processCoupon(
@@ -103,7 +95,6 @@ const MIXED10 = (cartItems, couponCode, res) => {
     res,
     adjustedPrice,
     discountAmount,
-    applied,
     cartItems
   );
 };
@@ -113,14 +104,13 @@ const REJECTED10 = (cartItems, couponCode, res) => {
     return acc + curVal.price;
   }, 0);
 
-  if (!(totalPrice > 1100)) {
+  if (!(totalPrice > 1000)) {
     throw new ErrorMsg(' Cart total must be greater than $1000');
   }
 
   const discount_percent = Math.floor(totalPrice * (10 / 100));
   const discount_fixed10 = 10;
   const discountAmount = discount_percent + discount_fixed10;
-  const applied = true;
   const adjustedPrice = totalPrice - discountAmount;
 
   processCoupon(
@@ -128,7 +118,6 @@ const REJECTED10 = (cartItems, couponCode, res) => {
     res,
     adjustedPrice,
     discountAmount,
-    applied,
     cartItems
   );
 };

@@ -22,7 +22,7 @@ exports.createCoupon = wrapAsync(async (req, res, next) => {
   const cartItems = await Cart.findAll();
 
   if (cartItems.length === 0) {
-    throw new ErrorMsg('Cart must contain atleast one item', 400);
+    throw new ErrorMsg('Cart must contain at least one item', 400);
   }
 
   if (couponCode === 'FIXED10') {
