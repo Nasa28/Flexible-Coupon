@@ -4,6 +4,7 @@ const ErrorMsg = require('../utils/ErrorMsg');
 const processCoupon = async (
   couponCode,
   res,
+  originalPrice,
   adjustedPrice,
   discountAmount,
   cartItems
@@ -17,6 +18,7 @@ const processCoupon = async (
   return res.status(200).json({
     status: 'Coupon Applied',
     couponCode,
+    originalPrice,
     adjustedPrice,
     discountAmount,
     cartItems,
@@ -33,10 +35,10 @@ const FIXED10 = (cartItems, couponCode, res) => {
   }
   const discountAmount = 10;
   const adjustedPrice = totalPrice - discountAmount;
-
   processCoupon(
     couponCode,
     res,
+    (originalPrice = totalPrice),
     adjustedPrice,
     discountAmount,
     cartItems
@@ -60,6 +62,7 @@ const PERCENT10 = (cartItems, couponCode, res) => {
   processCoupon(
     couponCode,
     res,
+    (originalPrice = totalPrice),
     adjustedPrice,
     discountAmount,
     cartItems
@@ -93,6 +96,7 @@ const MIXED10 = (cartItems, couponCode, res) => {
   processCoupon(
     couponCode,
     res,
+    (originalPrice = totalPrice),
     adjustedPrice,
     discountAmount,
     cartItems
@@ -116,6 +120,7 @@ const REJECTED10 = (cartItems, couponCode, res) => {
   processCoupon(
     couponCode,
     res,
+    (originalPrice = totalPrice),
     adjustedPrice,
     discountAmount,
     cartItems

@@ -2,16 +2,16 @@ const Cart = require('../models/Cart');
 const wrapAsync = require('../utils/wrapAsync');
 
 exports.getCartItems = async (req, res, next) => {
-  const cartList = await Cart.findAll();
-  const totalPrice = cartList.reduce((acc, curVal) => {
+  const cartItems = await Cart.findAll();
+  const totalPrice = cartItems.reduce((acc, curVal) => {
     return acc + curVal.price;
   }, 0);
 
   res.status(200).json({
     status: 'Success',
-    count: cartList.length,
+    count: cartItems.length,
     totalPrice,
-    cartList,
+    cartItems,
   });
 };
 
