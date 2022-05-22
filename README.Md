@@ -41,9 +41,9 @@ npm install
 ```
 - Set up your SQL database and create .env file on the root directory of your project and add the following environment variables;
 
-PORT=8000__
-POSTGRES_PASSWORD='your password'__ 
-DB_USERNAME='your username'__
+PORT=8000 <br />
+POSTGRES_PASSWORD='your password' <br /> 
+DB_USERNAME='your username' <br />
 NODE_ENV=development
 
 - Start the local server with:
