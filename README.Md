@@ -20,38 +20,36 @@
 - /cart endpoint accepts a /GET request and shows a small list of items by default with each item having a name and price.
 
 - /coupon accepts a /POST request with a coupon code, checks its validity, and returns the total adjusted price,discount
-amount, oldprice before the coupon code was applied and the list of items.
+amount, old price before the coupon code was applied and the list of items.
 
-## Getting Started
+### Local Setup 
 
-To get a local copy up and running follow these simple example steps.
+To get a local copy up and running follow these simple steps.
 On your terminal, run
 
 ```
- git@github.com:Nasa28/Flexible-Coupon.git
+git clone git@github.com:Nasa28/Flexible-Coupon.git
 
 ```
 
-### Local Setup 
+- cd into the project folder
 
 - Install dependencies with:
 
 ```
 npm install
 ```
-- You will need to set up your sql database locally and create .env file on the root of your project with the following variable set;
+- Set up your SQL database and create .env file on the root directory of your project and add the following environment variables;
 
 PORT=8000
 POSTGRES_PASSWORD='your password'
 DB_USERNAME='your username'
 NODE_ENV=development
 
-### Usage
-
-Start server with:
+- Start the local server with:
 
 ```
-    npm start
+    npm run dev
 ```
 
 Open `http://localhost:8000/api/v1/cart` in your browser to fetch the list of items in the cart.
