@@ -7,7 +7,8 @@ const sequelize = new Sequelize(
   process.env.POSTGRES_PASSWORD,
   {
     dialect: 'postgres',
-    host: 'localhost',
+    host: 'host',
+    port: 5432,
   }
 );
 module.exports = sequelize;
