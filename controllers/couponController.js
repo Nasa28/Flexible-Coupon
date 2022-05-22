@@ -1,7 +1,7 @@
 const Cart = require('../models/Cart');
 const wrapAsync = require('../utils/wrapAsync');
-const Coupon = require('../models/Coupon');
 const ErrorMsg = require('../utils/ErrorMsg');
+
 const {
   FIXED10,
   PERCENT10,
@@ -9,7 +9,7 @@ const {
   REJECTED10,
 } = require('../utils/couponRules');
 
-exports.createCoupon = wrapAsync(async (req, res, next) => {
+exports.applyCoupon = wrapAsync(async (req, res, next) => {
   const { couponCode } = req.body;
   const valid_coupon_codes = ['FIXED10', 'PERCENT10', 'MIXED10', 'REJECTED10'];
 
@@ -41,16 +41,3 @@ exports.createCoupon = wrapAsync(async (req, res, next) => {
     REJECTED10(cartItems, couponCode, res);
   }
 });
-
-exports.getCoupons = async (req, res, next) => {
-  const coupon = await Coupon.findAll();
-  const totalPrice = coupon.reduce((acc, curVal) => {
-    return acc + curVal.price;
-  }, 0);
-
-  res.status(200).json({
-    status: 'Success',
-    count: coupon.length,
-    coupon,
-  });
-};

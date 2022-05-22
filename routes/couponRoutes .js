@@ -1,8 +1,8 @@
 const express = require('express');
-const { createCoupon, getCoupons } = require('../controllers/couponController');
+const { applyCoupon } = require('../controllers/couponController');
 
 const router = express.Router();
 
-router.route('/').post(createCoupon).get(getCoupons);
+router.route('/').post(applyCoupon);
 
 module.exports = router;
